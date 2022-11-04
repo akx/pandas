@@ -757,8 +757,7 @@ class PythonParser(ParserBase):
         if self.on_bad_lines == self.BadLineHandleMethod.ERROR:
             raise ParserError(msg)
         elif self.on_bad_lines == self.BadLineHandleMethod.WARN:
-            base = f"Skipping line {row_num}: "
-            sys.stderr.write(base + msg + "\n")
+            sys.stderr.write(f"Skipping line {row_num}: {msg}\n")
 
     def _next_iter_line(self, row_num: int) -> list[Scalar] | None:
         """
@@ -803,7 +802,7 @@ class PythonParser(ParserBase):
                         "after Python's csv library has parsed "
                         "all rows)."
                     )
-                    msg += ". " + reason
+                    msg += f". {reason}"
 
                 self._alert_malformed(msg, row_num)
             return None
@@ -1033,7 +1032,7 @@ class PythonParser(ParserBase):
                         "Error could possibly be due to quotes being "
                         "ignored when a multi-char delimiter is used."
                     )
-                    msg += ". " + reason
+                    msg += f". {reason}"
 
                 self._alert_malformed(msg, row_num + 1)
 
